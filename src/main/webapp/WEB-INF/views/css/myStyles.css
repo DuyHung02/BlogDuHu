@@ -1,0 +1,24 @@
+.button {
+    padding: 15px 25px;
+    font-size: 15px !important;
+    text-align: center;
+    cursor: pointer;
+    outline: none;
+    color: #fff;
+    background-color: #dc3545 !important;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 9px #999;
+}
+
+.button:hover {background-color: #ae2417}
+
+.button:active {
+    background-color: #ae2417;
+    box-shadow: 0 5px #666;
+    transform: translateY(4px);
+}
+
+.red {
+    color: #dc3545;
+}
