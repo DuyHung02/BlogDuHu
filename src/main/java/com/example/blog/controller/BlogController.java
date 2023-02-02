@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.util.List;
 
@@ -18,6 +19,8 @@ import java.util.List;
 public class BlogController {
     @Autowired
     BlogService blogService;
+    @Autowired
+    HttpSession httpSession;
 
     @Autowired
     CategoryService categoryService;
@@ -30,6 +33,8 @@ public class BlogController {
     public ModelAndView show() {
         ModelAndView modelAndView = new ModelAndView("home");
         modelAndView.addObject("blogs", blogService.getAll());
+        modelAndView.addObject("account", httpSession.getAttribute("account"));
+        modelAndView.addObject("message", httpSession.getAttribute("message"));
         return modelAndView;
     }
 

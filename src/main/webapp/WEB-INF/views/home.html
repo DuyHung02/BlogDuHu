@@ -6,6 +6,8 @@
     <meta name="description" content=""/>
     <meta name="author" content=""/>
     <title>Blog Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
     <!-- Core theme CSS (includes Bootstrap)-->
     <link href="views/css/styles.css" rel="stylesheet"/>
     <!-- Bootstrap core JS-->
@@ -14,30 +16,113 @@
     <link href="views/css/myStyles.css" rel="stylesheet">
 </head>
 <body>
+
+<th:block th:if="${message}">
+    <div class="alert alert-warning alert-dismissible">
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        <strong><p th:text="${message}"></p></strong>
+    </div>
+</th:block>
+
 <!-- Responsive navbar-->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
     <div class="container">
-        <a class="navbar-brand" href="#!">Đặng Duy Hùng</a>
+        <a class="navbar-brand" href="#!">Blog Of Bach Create By Hung</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
                 aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span
                 class="navbar-toggler-icon"></span></button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div th:if="${account == null}" class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">About</a></li>
-                <li class="nav-item"><a class="nav-link" href="#!">Contact</a></li>
-                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>
+                <li class="nav-item"><button class="nav-link btn btn-dark" data-bs-toggle="modal" data-bs-target="#register">Register</button></li>
+                <li class="nav-item"><button class="nav-link btn btn-dark" data-bs-toggle="modal" data-bs-target="#login">Login</button></li>
+                <li class="nav-item"><a class="nav-link btn btn-dark" ></a></li>
+                <!--                <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">Blog</a></li>-->
+            </ul>
+        </div>
+        <div th:if="${account != null}" class="collapse navbar-collapse">
+            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                <li class="nav-item"><a class="nav-link btn btn-dark" href="/logout">Logout</a></li>
+                <li class="nav-item"><a class="nav-link btn btn-dark" th:text="${session.account.getUserName()}" ></a></li>
+                <li class="nav-item"><img th:src="${session.account.getAvatar()}" style="width: 70px; height: 70px"></li>
             </ul>
         </div>
     </div>
 </nav>
+
+<!-- The Modal register -->
+<div class="modal" id="register">
+    <form action="/register" method="post" enctype="multipart/form-data">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Register</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center">
+                    <label>Input Gmail:</label><br>
+                    <input type="text" name="gmail" placeholder="Enter Gmail..." style="width: 300px"><br>
+                    <label>Input Password:</label><br>
+                    <input type="password" name="password" placeholder="Enter Password..." style="width: 300px"><br>
+                    <label>Input User Name:</label><br>
+                    <input type="text" name="userName" placeholder="Enter User Name..." style="width: 300px"><br>
+                    <label>Choice Avatar:</label><br>
+                    <input type="file" name="upImg"><br>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
+<!-- The Modal login -->
+<div class="modal" id="login">
+    <form action="/login" method="post">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Login</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body" style="text-align: center">
+                    <label>Input Gmail:</label><br>
+                    <input type="text" name="gmail" placeholder="Enter Gmail..." style="width: 300px"><br>
+                    <label>Input Password:</label><br>
+                    <input type="password" name="password" placeholder="Enter Password..." style="width: 300px"><br>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
+            </div>
+        </div>
+    </form>
+</div>
+
 <!-- Page header with logo and tagline-->
 <header class="py-5 bg-light border-bottom mb-4">
     <div class="container">
         <div class="text-center my-5">
             <h1 class="fw-bolder">Welcome to BachVjp Official!</h1>
             <p class="lead mb-0">They call me Bach, Because i never Next</p>
-            <h5 class="fw-bolder">Hãy <span class="red">LIKE</span> và <span class="red">SUBSCRIBE</span> cho <span class="red">BachVjp</span> nhé!</h5><br>
+            <h5 class="fw-bolder">Hãy <span class="red">LIKE</span> và <span class="red">SUBSCRIBE</span> cho <span
+                    class="red">BachVjp</span> nhé!</h5><br>
             <a class="button" href="https://www.youtube.com/@imt.b8520/videos">Nhấp vô! Nhấp vô!</a>
         </div>
     </div>
@@ -48,17 +133,19 @@
         <!-- Blog entries-->
         <div class="col-lg-8">
             <!-- Featured blog post-->
-<!--            <div class="card mb-4" th:each="blog: ${blogs}">-->
-<!--                <img class="card-img-top" th:src="${blog.getImg()}" alt="..."/>-->
-<!--                <div class="card-body">-->
-<!--                    <div class="small text-muted">January 1, 2022</div>-->
-<!--                    <h2 class="card-title" th:text="${blog.getTitle()}"></h2>-->
-<!--                    <p class="card-text" th:text="${blog.getContent()}"></p>-->
-<!--                    <a class="btn btn-primary" href="#">Read more →</a>-->
-<!--                </div>-->
-<!--            </div>-->
+            <!--            <div class="card mb-4" th:each="blog: ${blogs}">-->
+            <!--                <img class="card-img-top" th:src="${blog.getImg()}" alt="..."/>-->
+            <!--                <div class="card-body">-->
+            <!--                    <div class="small text-muted">January 1, 2022</div>-->
+            <!--                    <h2 class="card-title" th:text="${blog.getTitle()}"></h2>-->
+            <!--                    <p class="card-text" th:text="${blog.getContent()}"></p>-->
+            <!--                    <a class="btn btn-primary" href="#">Read more →</a>-->
+            <!--                </div>-->
+            <!--            </div>-->
             <div class="card mb-4">
-                <img class="card-img-top" src="https://scontent.fhan17-1.fna.fbcdn.net/v/t1.6435-9/81776058_859847394446742_7686530049972895744_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=2UVlxZAOEVcAX_BfAc2&_nc_ht=scontent.fhan17-1.fna&oh=00_AfCOjOIeQYrb0XB4KNl2ZqF-gqW4vFMxNFNdXOf0pi5UtA&oe=63FEF84B" alt="..."/>
+                <img class="card-img-top"
+                     src="https://scontent.fhan17-1.fna.fbcdn.net/v/t1.6435-9/81776058_859847394446742_7686530049972895744_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=8bfeb9&_nc_ohc=2UVlxZAOEVcAX_BfAc2&_nc_ht=scontent.fhan17-1.fna&oh=00_AfCOjOIeQYrb0XB4KNl2ZqF-gqW4vFMxNFNdXOf0pi5UtA&oe=63FEF84B"
+                     alt="..."/>
                 <div class="card-body">
                     <div class="small text-muted">30/1/2023</div>
                     <h2 class="card-title">BachVjp and friends</h2>
@@ -128,9 +215,9 @@
                     <div class="row">
                         <div class="col-sm-6">
                             <ul class="list-unstyled mb-0">
-                                <li><a href="#!">Web Design</a></li>
-                                <li><a href="#!">HTML</a></li>
-                                <li><a href="#!">Freebies</a></li>
+                                <li><a href="#!">Web BachVjp</a></li>
+                                <li><a href="#!">Web HungVjp</a></li>
+                                <li><a href="#!">Web KienVjp</a></li>
                             </ul>
                         </div>
                         <div class="col-sm-6">
@@ -156,13 +243,13 @@
 
 <div style="text-align: center">
     <video controls style="height: 300px">
-        <source src="/image/bachVjp.mp4" >
+        <source src="/image/bachVjp.mp4">
     </video>
     <video controls style="height: 300px">
-        <source src="/image/petOfBach.mp4" >
+        <source src="/image/petOfBach.mp4">
     </video>
     <video controls style="height: 300px">
-        <source src="/image/bachDanhDan.mp4" >
+        <source src="/image/bachDanhDan.mp4">
     </video>
 </div>
 
